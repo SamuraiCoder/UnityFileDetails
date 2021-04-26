@@ -17,7 +17,7 @@ namespace Editor.UnityFileDetails.FileDetails
                 [".jpg"] = "tga",
                 [".fbx"] = "fbx",
                 [".cs"] = "cs",
-                [".prefab"] = "prf",
+                [".prefab"] = "prefab",
             };
 
             _extensionEnabled = true;
