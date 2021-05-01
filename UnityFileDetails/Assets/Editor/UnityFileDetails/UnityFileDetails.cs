@@ -12,7 +12,8 @@ namespace Editor.UnityFileDetails
     {
         private static Color defaultColor = new Color32(127, 127, 127, 160);
         private static Color highlightColor = new Color32(255, 255, 255, 255);
-        private static float iconSeparator = 25f;
+        private static float iconSeparator = 30f;
+        private const string editorPrefUnityFileDetailsKey = "UnityFileDetails";
         
         public enum FileInfoType
         {
@@ -25,6 +26,21 @@ namespace Editor.UnityFileDetails
         private static List<IDetails> _fileDetailsList;
         private static Dictionary<FileInfoType, string> _fileDetailsListResult;
     
+        #region Editor
+        [MenuItem("Tools/UnityFileDetails/Activate")]
+        private static void Activate()
+        {
+            SubscribeWindowEvents();
+            DisplayUnityFileDetails = true;
+        }
+        [MenuItem("Tools/UnityFileDetails/Deactivate")]
+        private static void Deactivate()
+        {
+            UnSubscribeWindowEvents();
+            DisplayUnityFileDetails = false;
+        }
+        #endregion
+        
         static UnityFileDetails()
         {
             _fileDetailsList = new List<IDetails>();
@@ -33,14 +49,27 @@ namespace Editor.UnityFileDetails
             AddFileDetails(new FileExtension());
             AddFileDetails(new FileSize());
             AddFileDetails(new FileName());
-        
+            
+            //By default
+            Deactivate();
+        }
+
+        private static void SubscribeWindowEvents()
+        {
             EditorApplication.projectWindowItemOnGUI += OnProjectWindowCallback;
-        
-            Selection.selectionChanged += () =>
-            {
-                if (Selection.activeObject != null)
-                    AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out selectedGuid, out long id);
-            };
+            Selection.selectionChanged += OnSelectionGUID;
+        }
+
+        private static void UnSubscribeWindowEvents()
+        {
+            EditorApplication.projectWindowItemOnGUI -= OnProjectWindowCallback;
+            Selection.selectionChanged -= OnSelectionGUID;
+        }
+
+        private static void OnSelectionGUID()
+        {
+            if (Selection.activeObject != null)
+                AssetDatabase.TryGetGUIDAndLocalFileIdentifier(Selection.activeObject, out selectedGuid, out long id);
         }
 
         private static void AddFileDetails(IDetails detail)
@@ -51,6 +80,11 @@ namespace Editor.UnityFileDetails
     
         private static void OnProjectWindowCallback(string guid, Rect selectionRect)
         {
+            if (!DisplayUnityFileDetails)
+            {
+                return;
+            }
+            
             if (Application.isPlaying || Event.current.type != EventType.Repaint)
             {
                 return;
@@ -108,7 +142,13 @@ namespace Editor.UnityFileDetails
                 }
             }
         }
-
+        
+        private static bool DisplayUnityFileDetails
+        {
+            get => EditorPrefs.GetBool(editorPrefUnityFileDetailsKey, false);
+            set => EditorPrefs.SetBool(editorPrefUnityFileDetailsKey, value);
+        }
+        
         private static void CreateLabelFileSize(Rect selectionRect, string fileSizeString, bool selected)
         {
             var style = new GUIStyle(EditorStyles.label)
