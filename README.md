@@ -8,3 +8,5 @@ To see how it works, import the unitypackage and select "One column layout" on t
 
 
 Unity tested version: 2019.4.22f1
+
+[![Create Unity Package](https://github.com/SamuraiCoder/UnityFileDetails/actions/workflows/create_unity_package.yml/badge.svg?branch=main)](https://github.com/SamuraiCoder/UnityFileDetails/actions/workflows/create_unity_package.yml)
