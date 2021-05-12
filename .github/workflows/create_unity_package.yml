@@ -8,7 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        cd UnityFileDetails &&
         echo "Assets/Editor/UnityFileDetails.meta" > metaList &&
         find Assets/Editor/UnityFileDetails -name \*.meta >> metaList
 
@@ -16,6 +15,7 @@ jobs:
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
+        project-folder: ./UnityFileDetails
         package-path: 'output/UnityFileDetails.unitypackage'
         include-files: metaList
     - uses: actions/upload-artifact@master
