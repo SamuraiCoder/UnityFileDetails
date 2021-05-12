@@ -17,9 +17,8 @@ jobs:
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        project-folder: './UnityFileDetails/'
         package-path: 'output/UnityFileDetails.unitypackage'
-        include-files: metaList
+        include-files: ./UnityFileDetails/metaList
     - uses: actions/upload-artifact@master
       with:
         path: output
