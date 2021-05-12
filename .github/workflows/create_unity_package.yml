@@ -8,8 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        cd ./UnityFileDetails/
-        echo "Assets/Editor/UnityFileDetails.meta" > metaList
+        cd UnityFileDetails/
+        ls -ltr 
+        echo Assets/Editor/UnityFileDetails.meta > metaList
         find Assets/Editor/UnityFileDetails -name \*.meta >> metaList
 
     - run: mkdir output
