@@ -8,8 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        echo "./UnityFileDetails/Assets/Editor/UnityFileDetails.meta" > metaList
-        find ./UnityFileDetails/Assets/Editor/UnityFileDetails -name \*.meta >> metaList
+        cd ./UnityFileDetails/
+        echo "Assets/Editor/UnityFileDetails.meta" > metaList
+        find Assets/Editor/UnityFileDetails -name \*.meta >> metaList
 
     - run: mkdir output
 
@@ -20,4 +21,4 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         path: output
-        name: package
+        name: UnityFileDetails.unitypackage
