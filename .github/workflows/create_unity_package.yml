@@ -8,17 +8,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        cd ./UnityFileDetails/
+        cd UnityFileDetails/
+        ls -ltr
         echo "Assets/Editor/UnityFileDetails.meta" > metaList
         find Assets/Editor/UnityFileDetails -name \*.meta >> metaList
-
+        ls -ltr
     - run: mkdir output
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
+        project-folder: "./UnityFileDetails/"
         package-path: 'output/UnityFileDetails.unitypackage'
-        include-files: metaList
+        include-files: ./UnityFileDetails/metaList
     - uses: actions/upload-artifact@master
       with:
         path: output
-        name: UnityFileDetails.unitypackage
+        name: package
