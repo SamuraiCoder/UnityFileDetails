@@ -12,7 +12,6 @@ jobs:
         ls -ltr
         echo "Assets/Editor/UnityFileDetails.meta" > metaList
         find Assets/Editor/UnityFileDetails -name \*.meta >> metaList
-        mv metalist ../
         ls -ltr
     - run: mkdir output
 
