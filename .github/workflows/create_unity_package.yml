@@ -8,11 +8,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        pwd
+        cd UnityFileDetails/
         ls -ltr
         echo "Assets/Editor/UnityFileDetails.meta" > metaList
         find Assets/Editor/UnityFileDetails -name \*.meta >> metaList
-        ls -ltrh metalist
+        ls -ltrh
     - run: mkdir output
 
     - uses: pCYSl5EDgo/create-unitypackage@master
