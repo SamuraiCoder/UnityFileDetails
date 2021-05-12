@@ -11,12 +11,13 @@ jobs:
        cd ./UnityFileDetails
         echo "Assets/Editor/UnityFileDetails.meta" > ../metaList
         find Assets/Editor/UnityFileDetails -name \*.meta >> ../metaList
+        ls -ltrh ../metalist
     - run: mkdir output
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
         package-path: 'output/UnityFileDetails.unitypackage'
-        include-files: metaList
+        include-files: ../metaList
     - uses: actions/upload-artifact@master
       with:
         path: output
