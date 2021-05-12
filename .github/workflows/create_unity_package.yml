@@ -8,7 +8,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        cd ./UnityFileDetails
         pwd
         ls -ltr
         echo "Assets/Editor/UnityFileDetails.meta" > metaList
